@@ -3,6 +3,9 @@
 - name: Install Kubernetes packages
   include_tasks: pkg.yml
 
+- name: Install python and packages
+  include_tasks: python.yml
+
 - name: Disable system swap
   shell: "swapoff -a"
 
