@@ -3,8 +3,13 @@
 - name: Install GCC
   yum:
     name: gcc
-    pdate_cache: yes
-    state: installed
+    state: present
+
+- name: Create a tmp python binary  directory if it does not exist
+  file:
+    path: /tmp/python27
+    state: directory
+    mode: '0755'
 
 - name: Download Python 2.7
   unarchive:
@@ -13,15 +18,15 @@
     remote_src: yes
 
 - name: configure python 2.7.10
-  command: ./configure; make install
+  command: ./configure
   args:
-    chdir: "/tmp/python27"
+    chdir: "/tmp/python27/Python-2.7.10"
 
 - name: make and install python 2.7.10
   become: yes
   shell: make && make install
   args:
-    chdir: "/tmp/python27"
+    chdir: "/tmp/python27/Python-2.7.10"
 
 - name: recycle python install file
   command: rm -rf /tmp/python27
