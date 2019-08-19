@@ -1,0 +1,19 @@
+---
+
+- hosts: kube-cluster
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: docker, tags: docker }
+
+- hosts: master
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: commons/pre-install, pkgs: ["kubelet", "kubeadm", "kubectl"], tags: master }
+
+- hosts: node
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: commons/pre-install , pkgs: ["kubelet", "kubeadm"], tags: node }
